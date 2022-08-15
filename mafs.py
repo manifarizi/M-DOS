@@ -73,6 +73,8 @@ def read(name):
     for item in file_sys:
         if item == WORKING_DIR + '/' + name:
             print(file_sys[WORKING_DIR + '/' + name])
+    else:
+        print('read: File Not Found!')
     save()
 
 def cd(name):
@@ -107,20 +109,22 @@ def mkfile(name, data=''):
 def delete(name):
     """deletes a file"""
     try:
-        print('deleted!')
+        
         dir_sys[WORKING_DIR].remove({'File_Name': name})
         del file_sys[WORKING_DIR + '/' + name]
     except ValueError:
-        print('Delete: File Not Found!')
+        print('delete: File Not Found!')
+    finally:
+        print('deleted!')
     save()
 
 
 def rmdir(name):
     """removes a diretory"""
     if exist_dir(name):
-        print('deleted!')
         del dir_sys[WORKING_DIR + '/' + name]
         dir_sys[WORKING_DIR].remove(name)
+        print('deleted!')
     else:
         print('rmdir: Dir Not Found!')
     save()
