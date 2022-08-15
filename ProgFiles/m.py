@@ -1,0 +1,2 @@
+global args
+print(args)
