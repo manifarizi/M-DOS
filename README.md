@@ -1,6 +1,6 @@
 # maniFileSystem
 A in-memory file-system
-#commands:
+# commands:
 ### ls:
 you can list files of a directory with ls command, you can use it like this:
 ```
@@ -41,4 +41,44 @@ you can use rmdir for deleting "dirs" like this:
 rmdir(dirName)
 ```
 # Custom Programs
-Any python program you copy to ProgFiles Folder You can run in the app
+Programs Are just Python Files You can Create a Python File And Run it
+but You can use Custom Modules like FileSystem
+### File system
+with FileSystem You can do Things Like 
+
+Deleting Files, Making Files, Changing Files, Deleting Dirs, Making Dirs
+if you see a Warning in VSCode ___Ignore the Warnings!___ Because We Changed The ```globals()```
+
+For Deleting a File You can:
+
+FS.del(fileName)
+For Deleting a Dir You can:
+```python
+FS.rmdir(fileName)
+```
+For Deleting a Dir You can:
+
+```python
+FS.rmdir(fileName)
+```
+
+For Making a File You can:
+
+```python
+FS.mkfile(fileName)
+```
+
+For Making a Variable of All Files You can:
+
+```python
+MyList = FS.listDir()
+```
+### FullInput
+A Variable That Contains Code That Runed
+### args
+arguments that executed like:
+```
+ProgramName(args[0], args[1]) and to infinite
+```
+### System
+Runs a Command in Shell

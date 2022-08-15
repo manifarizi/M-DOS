@@ -22,8 +22,8 @@ def titlebar(_):
         sys.stdout.flush()
 title = threading.Thread(target=titlebar, args=(None,))
 title.start()
-while True:
-    key = input(f'{CF.AnsiList.back_blue}{FS.WORKING_DIR}>')
+def System(key):
+    """Run a System Command"""
     if key.split('(')[0] in FS.DComands:
         if len(key.split('(')) == 2:
             if key.split('(')[0] == 'cd':
@@ -52,19 +52,23 @@ while True:
             elif key.split('(')[0] == 'cd..':
                 FS.cdback()
     elif key.split('(')[0] in FS.Programs:
-        
         if len(key.split('(')) == 1:
             args = ()
-            vlist = globals()
+            vlist = {'args': args, 'FS': FS, 'CF': CF, 'FullInput': key, 'ChorusFruit': CF, 'FileSystem': FS, 'System': System}
             exec(open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read(), vlist)
         elif len(key.split('(')) == 2:
             args = []
-            
             for i in range(len(key.replace(', ', '(').split('('))):
                 args.append(key.replace(', ', '(').split('(')[i])
             args[len(args) - 1] = args[len(args) - 1][0:-1]
             args = tuple(args)
-            vlist = globals()
+            vlist = {'args': args, 'FS': FS, 'CF': CF, 'FullInput': key, 'ChorusFruit': CF, 'FileSystem': FS, 'System': System}
             exec(open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read(), vlist)
     else:
         print('M-DOS: Program Not Found')
+
+while True:
+    key = input(f'{CF.AnsiList.back_blue}{FS.WORKING_DIR}>')
+    System(key)
+
+

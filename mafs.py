@@ -138,3 +138,10 @@ def loadFS():
     global dir_sys
     with open("Save.mafs", "rb") as a_file:
         file_sys, dir_sys = pickle.load(a_file)
+def list_dir():
+    """list dir"""
+    LIST_DIR_VAR = []
+    for item in dir_sys[WORKING_DIR]:
+        if not item == 'nul':
+            LIST_DIR_VAR.append(filename(item))
+    return LIST_DIR_VAR

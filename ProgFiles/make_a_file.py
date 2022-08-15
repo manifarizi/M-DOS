@@ -1,2 +1,1 @@
-global FS
-FS.mkfile("A_file")
+System('mkdir(ok)')
