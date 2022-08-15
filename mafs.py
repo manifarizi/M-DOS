@@ -73,8 +73,8 @@ def read(name):
     for item in file_sys:
         if item == WORKING_DIR + '/' + name:
             print(file_sys[WORKING_DIR + '/' + name])
-    else:
-        print('read: File Not Found!')
+        else:
+            print('read: File Not Found!')
     save()
 
 def cd(name):
