@@ -65,9 +65,16 @@ FS.rmdir(fileName)
 For Making a File You can:
 
 ```python
+FS.mkfile(fileName, FileData)
+# or
 FS.mkfile(fileName)
+# to make a blank file
 ```
+For Reading a File You can:
 
+```python
+FS.read(fileName)
+```
 For Making a Variable of All Files You can:
 
 ```python
