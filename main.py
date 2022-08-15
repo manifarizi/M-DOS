@@ -5,6 +5,7 @@ import time
 import threading
 import ChorusFruit as CF
 import mafs as FS
+import SysCalls as SC
 os.chdir(os.path.dirname(__file__))
 FS.loadFS()
 with CF.Screen() as scr:
@@ -18,7 +19,7 @@ def titlebar(_):
     scr = CF.Screen()
     while True:
         time.sleep(0.5)
-        scr.Header(Left='[', Right= time.strftime(r'%H:%M:%S') + ']')
+        scr.Header(Left='[' + SC.BAR_LEFT_TEXT, Right= time.strftime(r'%H:%M:%S') + ']')
         sys.stdout.flush()
 title = threading.Thread(target=titlebar, args=(None,))
 title.start()
@@ -52,9 +53,10 @@ def System(key):
             elif key.split('(')[0] == 'cd..':
                 FS.cdback()
     elif key.split('(')[0] in FS.Programs:
+        vlist = {'SC': SC,'FS': FS, 'CF': CF, 'FullInput': key, 'ChorusFruit': CF, 'FileSystem': FS, 'System': System, 'SC': SC}
         if len(key.split('(')) == 1:
             args = ()
-            vlist = {'args': args, 'FS': FS, 'CF': CF, 'FullInput': key, 'ChorusFruit': CF, 'FileSystem': FS, 'System': System}
+            vlist.update({'args': args})
             exec(open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read(), vlist)
         elif len(key.split('(')) == 2:
             args = []
@@ -62,7 +64,7 @@ def System(key):
                 args.append(key.replace(', ', '(').split('(')[i])
             args[len(args) - 1] = args[len(args) - 1][0:-1]
             args = tuple(args)
-            vlist = {'args': args, 'FS': FS, 'CF': CF, 'FullInput': key, 'ChorusFruit': CF, 'FileSystem': FS, 'System': System}
+            vlist.update({'args': args})
             exec(open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read(), vlist)
     else:
         print('M-DOS: Program Not Found')
@@ -70,5 +72,4 @@ def System(key):
 while True:
     key = input(f'{CF.AnsiList.back_blue}{FS.WORKING_DIR}>')
     System(key)
-
-
+    
