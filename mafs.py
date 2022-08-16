@@ -70,12 +70,11 @@ def mkdir(name):
         save()
 
 def read(name):
-    """reads a fileS"""
-    for item in file_sys:
-        if item == WORKING_DIR + '/' + name:
-            print(file_sys[WORKING_DIR + '/' + name])
-        else:
-            print('read: File Not Found!')
+    """reads a files"""
+    try:
+        print(file_sys[WORKING_DIR + '/' + name])
+    except KeyError:
+        print('read: File Not Found!')
     save()
 
 def cd(name):
@@ -132,7 +131,7 @@ def rmdir(name):
 
 def save():
     appReset()
-    """saves the files and dirs"""
+    """Saves the files and dirs"""
     global file_sys
     global dir_sys
     with open("Save.mafs", "wb") as a_file:
@@ -145,7 +144,6 @@ def loadFS():
     with open("Save.mafs", "rb") as a_file:
         file_sys, dir_sys = pickle.load(a_file)
         appReset()
-    
 
 def list_dir():
     """list dir"""
@@ -155,9 +153,10 @@ def list_dir():
             LIST_DIR_VAR.append(filename(item))
     return LIST_DIR_VAR
 def appReset():
+    """Resets Apps Dir"""
     dir_sys['#/home/Apps'] = []
-    for i in Apps:
-        dir_sys['#/home/Apps'].append({'File_Name': i})
+    for item in Apps:
+        dir_sys['#/home/Apps'].append({'File_Name': item})
 
     if 'Apps' not in dir_sys['#/home']:
         dir_sys['#/home'].append('Apps')

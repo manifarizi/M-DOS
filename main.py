@@ -25,50 +25,51 @@ title = threading.Thread(target=titlebar, args=(None,))
 title.start()
 def System(key):
     """Run a System Command"""
-    if key.split('(')[0] in FS.DComands:
-        if len(key.split('(')) == 2:
-            if key.split('(')[0] == 'cd':
-                FS.cd(key.split('(')[1][0:-1])
-            elif key.split('(')[0] == 'mkdir':
-                FS.mkdir(key.split('(')[1][0:-1])
-            elif key.split('(')[0] == 'read':
-                FS.read(key.split('(')[1][0:-1])
-            elif key.split('(')[0] == 'del':
-                FS.delete(key.split('(')[1][0:-1])
-            elif key.split('(')[0] == 'rmdir':
-                FS.rmdir(key.split('(')[1][0:-1])
-            try:
-                if key.split('(')[0] == 'mkfile':
-                    FS.mkfile(key.split('(')[1].split(', ')[0], key.split(', ')[1][0:-1])
-            except IndexError:
-                if key.split('(')[0] == 'mkfile':
-                    FS.mkfile(key.split('(')[1][0:-1])
+    if not key == '':
+        if key.split('(')[0] in FS.DComands:
+            if len(key.split('(')) == 2:
+                if key.split('(')[0] == 'cd':
+                    FS.cd(key.split('(')[1][0:-1])
+                elif key.split('(')[0] == 'mkdir':
+                    FS.mkdir(key.split('(')[1][0:-1])
+                elif key.split('(')[0] == 'read':
+                    FS.read(key.split('(')[1][0:-1])
+                elif key.split('(')[0] == 'del':
+                    FS.delete(key.split('(')[1][0:-1])
+                elif key.split('(')[0] == 'rmdir':
+                    FS.rmdir(key.split('(')[1][0:-1])
+                try:
+                    if key.split('(')[0] == 'mkfile':
+                        FS.mkfile(key.split('(')[1].split(', ')[0], key.split(', ')[1][0:-1])
+                except IndexError:
+                    if key.split('(')[0] == 'mkfile':
+                        FS.mkfile(key.split('(')[1][0:-1])
+            else:
+                if key.split('(')[0] == 'ls':
+                    FS.ls()
+                elif key.split('(')[0] == 'save':
+                    FS.save()
+                elif key.split('(')[0] == 'loadFS':
+                    FS.loadFS()
+                elif key.split('(')[0] == 'cd..':
+                    FS.cdback()
+        elif key.split('(')[0] in FS.Apps:
+            vlist = {'SC': SC,'FS': FS, 'CF': CF, 'FullInput': key, 'ChorusFruit': CF, 'FileSystem': FS, 'System': System, 'SC': SC, 'screen': scr, 'scr': scr}
+            if len(key.split('(')) == 1:
+                args = (key.split('('))
+                args = tuple(args)
+                vlist.update({'args': args})
+                exec(open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read(), vlist)
+            elif len(key.split('(')) == 2:
+                args = []
+                for i in range(len(key.replace(', ', '(').split('('))):
+                    args.append(key.replace(', ', '(').split('(')[i])
+                args[len(args) - 1] = args[len(args) - 1][0:-1]
+                args = tuple(args)
+                vlist.update({'args': args})
+                exec(open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read(), vlist)
         else:
-            if key.split('(')[0] == 'ls':
-                FS.ls()
-            elif key.split('(')[0] == 'save':
-                FS.save()
-            elif key.split('(')[0] == 'loadFS':
-                FS.loadFS()
-            elif key.split('(')[0] == 'cd..':
-                FS.cdback()
-    elif key.split('(')[0] in FS.Apps:
-        vlist = {'SC': SC,'FS': FS, 'CF': CF, 'FullInput': key, 'ChorusFruit': CF, 'FileSystem': FS, 'System': System, 'SC': SC}
-        if len(key.split('(')) == 1:
-            args = (key.split('('))
-            args = tuple(args)
-            vlist.update({'args': args})
-            exec(open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read(), vlist)
-        elif len(key.split('(')) == 2:
-            args = []
-            for i in range(len(key.replace(', ', '(').split('('))):
-                args.append(key.replace(', ', '(').split('(')[i])
-            args[len(args) - 1] = args[len(args) - 1][0:-1]
-            args = tuple(args)
-            vlist.update({'args': args})
-            exec(open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read(), vlist)
-    else:
-        print('M-DOS: App Not Found')
+            print('M-DOS: App Not Found')
 
 while True:
     key = input(f'{CF.AnsiList.back_blue}{FS.WORKING_DIR}>')
