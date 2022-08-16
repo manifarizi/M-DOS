@@ -3,15 +3,15 @@ import os
 import pickle
 os.chdir(os.path.dirname(__file__))
 dir_sys = {'#': ['home', {'File_Name': 'text.txt'}],
-'#/home': ['Dir1', 'Dir2'],
-'#/home/Dir1': ['nul'],
+'#/home': ['Dir1', 'Apps'],
+'#/home/Apps': ['nul'],
 '#/home/Dir2': ['nul']}
 file_sys = {'#/text.txt': 'This is a text file'}
 DComands = ['cd', 'read', 'ls', 'mkdir', 'mkfile', 'loadFS', 'save', 'del', 'rmdir', 'cd..']
 DComandsl1 = ['cd', 'read', 'mkdir', 'mkfile', 'del', 'rmdir']
-Programs = []
+Apps = []
 for i in os.listdir('ProgFiles'):
-    Programs.append(i[0:-3])
+    Apps.append(i[0:-3])
 WORKING_DIR = '#'
 def is_file(file_name):
     """Return True if the input is a dict"""
@@ -49,6 +49,7 @@ def exist_dir(name):
 
 def ls():
     """list dir"""
+    appReset()
     for item in dir_sys[WORKING_DIR]:
         if not item == 'nul':
             if not is_file(i):
@@ -80,13 +81,14 @@ def read(name):
 def cd(name):
     """change directory"""
     global WORKING_DIR
-    if is_dir(name):
-        if exist_dir(name):
-            WORKING_DIR = WORKING_DIR + '/' + name
+    for i in name.split('/'):
+        if is_dir(i):
+            if exist_dir(i):
+                WORKING_DIR = WORKING_DIR + '/' + i
+            else:
+                print("cd: Can't Find Dir With this name")
         else:
             print("cd: Can't Find Dir With this name")
-    else:
-        print("cd: Can't Find Dir With this name")
     save()
 
 def cdback():
@@ -109,7 +111,6 @@ def mkfile(name, data=''):
 def delete(name):
     """deletes a file"""
     try:
-        
         dir_sys[WORKING_DIR].remove({'File_Name': name})
         del file_sys[WORKING_DIR + '/' + name]
     except ValueError:
@@ -130,6 +131,7 @@ def rmdir(name):
     save()
 
 def save():
+    appReset()
     """saves the files and dirs"""
     global file_sys
     global dir_sys
@@ -142,6 +144,9 @@ def loadFS():
     global dir_sys
     with open("Save.mafs", "rb") as a_file:
         file_sys, dir_sys = pickle.load(a_file)
+        appReset()
+    
+
 def list_dir():
     """list dir"""
     LIST_DIR_VAR = []
@@ -149,3 +154,10 @@ def list_dir():
         if not item == 'nul':
             LIST_DIR_VAR.append(filename(item))
     return LIST_DIR_VAR
+def appReset():
+    dir_sys['#/home/Apps'] = []
+    for i in Apps:
+        dir_sys['#/home/Apps'].append({'File_Name': i})
+
+    if 'Apps' not in dir_sys['#/home']:
+        dir_sys['#/home'].append('Apps')

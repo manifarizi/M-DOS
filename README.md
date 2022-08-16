@@ -40,8 +40,8 @@ you can use rmdir for deleting "dirs" like this:
 ```
 rmdir(dirName)
 ```
-# Custom Programs
-Programs Are just Python Files You can Create a Python File And Run it
+# Custom Apps
+Apps Are just Python Files You can Create a Python File And Run it
 but You can use Custom Modules like FileSystem
 ### File system
 with FileSystem You can do Things Like 
@@ -85,7 +85,7 @@ A Variable That Contains Code That Runed
 ### args
 arguments that executed like:
 ```
-ProgramName(args[0], args[1]) and to infinite
+AppName(args[0], args[1]) and to infinite
 ```
 ### System
 Runs a Command in Shell

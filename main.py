@@ -52,10 +52,11 @@ def System(key):
                 FS.loadFS()
             elif key.split('(')[0] == 'cd..':
                 FS.cdback()
-    elif key.split('(')[0] in FS.Programs:
+    elif key.split('(')[0] in FS.Apps:
         vlist = {'SC': SC,'FS': FS, 'CF': CF, 'FullInput': key, 'ChorusFruit': CF, 'FileSystem': FS, 'System': System, 'SC': SC}
         if len(key.split('(')) == 1:
-            args = ()
+            args = (key.split('('))
+            args = tuple(args)
             vlist.update({'args': args})
             exec(open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read(), vlist)
         elif len(key.split('(')) == 2:
@@ -67,7 +68,7 @@ def System(key):
             vlist.update({'args': args})
             exec(open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read(), vlist)
     else:
-        print('M-DOS: Program Not Found')
+        print('M-DOS: App Not Found')
 
 while True:
     key = input(f'{CF.AnsiList.back_blue}{FS.WORKING_DIR}>')
