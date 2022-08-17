@@ -1,5 +1,5 @@
-# maniFileSystem
-A in-memory file-system
+# M-DOS
+A Operating System in python!!
 # commands:
 ### ls:
 you can list files of a directory with ls command, you can use it like this:
