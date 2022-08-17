@@ -118,8 +118,6 @@ def delete(name: str) -> None:
         del file_sys[WORKING_DIR + '/' + name]
     except ValueError:
         print('delete: File Not Found!')
-    finally:
-        print('deleted!')
     save()
 
 def rmdir(name: str) -> None:
@@ -127,7 +125,6 @@ def rmdir(name: str) -> None:
     if exist_dir(name):
         del dir_sys[WORKING_DIR + '/' + name]
         dir_sys[WORKING_DIR].remove(name)
-        print('deleted!')
     else:
         print('rmdir: Dir Not Found!')
     save()
