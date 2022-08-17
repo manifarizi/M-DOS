@@ -13,7 +13,7 @@ Apps = []
 for i in os.listdir('ProgFiles'):
     Apps.append(i[0:-3])
 WORKING_DIR = '#'
-def is_file(file_name):
+def is_file(file_name: str) -> bool:
     """Return True if the input is a dict"""
     if isinstance(file_name, dict):
         return True
@@ -21,7 +21,7 @@ def is_file(file_name):
         return False
     save()
 
-def filename(name):
+def filename(name: str) -> str:
     """Return name of a file"""
     if not name is None:
         if is_file(name):
@@ -32,14 +32,14 @@ def filename(name):
         print('nul')
     save()
 
-def is_dir(file_name):
+def is_dir(file_name: str) -> bool:
     """Returns True if input is not Dict"""
     if isinstance(file_name, dict):
         return False
     else:
         return True
     save()
-def exist_dir(name):
+def exist_dir(name: str) -> bool:
     """Returns True if input is not dict"""
     if name in dir_sys[WORKING_DIR]:
         return True
@@ -47,7 +47,7 @@ def exist_dir(name):
         return False
     save()
 
-def ls():
+def ls() -> None:
     """list dir"""
     appReset()
     for item in dir_sys[WORKING_DIR]:
@@ -59,7 +59,7 @@ def ls():
                     print(filename(item))
     save()
 
-def mkdir(name):
+def mkdir(name: str) -> None:
     """makes a directory"""
     if not exist_dir(name):
         dir_sys.update(dict(zip([WORKING_DIR + '/' + name], [['nul']])))
@@ -69,15 +69,19 @@ def mkdir(name):
         print('mkdir: File Or Dir with Same name Exist')
         save()
 
-def read(name):
+def read(name: str) -> None:
     """reads a files"""
     try:
         print(file_sys[WORKING_DIR + '/' + name])
     except KeyError:
         print('read: File Not Found!')
     save()
-
-def cd(name):
+def readReturn(name: str) -> str:
+    try:
+        return file_sys[WORKING_DIR + '/' + name]
+    except KeyError:
+        print('read: File Not Found!')
+def cd(name: str) -> None:
     """change directory"""
     global WORKING_DIR
     for i in name.split('/'):
@@ -90,14 +94,14 @@ def cd(name):
             print("cd: Can't Find Dir With this name")
     save()
 
-def cdback():
+def cdback() -> None:
     """change directory to one dicectory before"""
     global WORKING_DIR
     if WORKING_DIR != '#':
         WORKING_DIR = '/'.join(WORKING_DIR.split('/')[0:-1])
     save()
 
-def mkfile(name, data=''):
+def mkfile(name: str, data: str='') -> None:
     """makes a folder"""
     if not exist_dir(name):
         if not WORKING_DIR + '/' + name in [i for i in file_sys]:
@@ -107,7 +111,7 @@ def mkfile(name, data=''):
         print('mkfile: File Or dir with Same name Exist')
     save()
 
-def delete(name):
+def delete(name: str) -> None:
     """deletes a file"""
     try:
         dir_sys[WORKING_DIR].remove({'File_Name': name})
@@ -118,8 +122,7 @@ def delete(name):
         print('deleted!')
     save()
 
-
-def rmdir(name):
+def rmdir(name: str) -> None:
     """removes a diretory"""
     if exist_dir(name):
         del dir_sys[WORKING_DIR + '/' + name]
@@ -129,15 +132,15 @@ def rmdir(name):
         print('rmdir: Dir Not Found!')
     save()
 
-def save():
-    appReset()
+def save() -> None:
     """Saves the files and dirs"""
+    appReset()
     global file_sys
     global dir_sys
     with open("Save.mafs", "wb") as a_file:
         pickle.dump((file_sys, dir_sys), a_file)
 
-def loadFS():
+def loadFS() -> None:
     """Loads the old Saves"""
     global file_sys
     global dir_sys
@@ -145,14 +148,14 @@ def loadFS():
         file_sys, dir_sys = pickle.load(a_file)
         appReset()
 
-def list_dir():
+def list_dir() -> None:
     """list dir"""
     LIST_DIR_VAR = []
     for item in dir_sys[WORKING_DIR]:
         if not item == 'nul':
             LIST_DIR_VAR.append(filename(item))
     return LIST_DIR_VAR
-def appReset():
+def appReset() -> None:
     """Resets Apps Dir"""
     dir_sys['#/home/Apps'] = []
     for item in Apps:

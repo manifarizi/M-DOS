@@ -43,11 +43,12 @@ rmdir(dirName)
 # Custom Apps
 Apps Are just Python Files You can Create a Python File And Run it
 but You can use Custom Modules like FileSystem
+if you see a Warning in VSCode ___Ignore the Warnings!___ Because We Changed The ```globals()```
 ### File system
 with FileSystem You can do Things Like 
 
 Deleting Files, Making Files, Changing Files, Deleting Dirs, Making Dirs
-if you see a Warning in VSCode ___Ignore the Warnings!___ Because We Changed The ```globals()```
+
 
 For Deleting a File You can:
 
@@ -73,7 +74,7 @@ FS.mkfile(fileName)
 For Reading a File You can:
 
 ```python
-FS.read(fileName)
+fileData = FS.readReturn(fileName)
 ```
 For Making a Variable of All Files You can:
 
@@ -89,3 +90,25 @@ AppName(args[0], args[1]) and to infinite
 ```
 ### System
 Runs a Command in Shell
+### SysCalls
+With SysCalls We can make errors, warning, infos, change top bar text and so much more
+
+For MsgBox Error You can:
+```python
+SC.MSGBox().Error("Error")
+```
+
+For MsgBox Warnings You can:
+```python
+SC.MSGBox().Warn("Warning")
+```
+
+For MsgBox Infos You can:
+```python
+SC.MSGBox().Info("Info")
+```
+
+For Changing Top Bar Text you can:
+```python
+SC.Top_Bar().set('topBarText')
+```

@@ -1,4 +1,4 @@
-"""Importing modules"""
+'''Importing modules'''
 from time import sleep
 import ChorusFruit as CF
 scr = CF.Screen()

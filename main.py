@@ -70,8 +70,11 @@ def System(key):
                 exec(open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read(), vlist)
         else:
             print('M-DOS: App Not Found')
+OWORKING_DIR = FS.WORKING_DIR
+FS.WORKING_DIR = '#'
+System(FS.readReturn('startUP.boot').replace('[', '(').replace(']', ')'))
 
+FS.WORKING_DIR = OWORKING_DIR
 while True:
     key = input(f'{CF.AnsiList.back_blue}{FS.WORKING_DIR}>')
     System(key)
-    
