@@ -54,12 +54,13 @@ def System(key):
                 elif key.split('(')[0] == 'cd..':
                     FS.cdback()
         elif key.split('(')[0] in FS.Apps:
-            vlist = {'SC': SC,'FS': FS, 'CF': CF, 'FullInput': key, 'ChorusFruit': CF, 'FileSystem': FS, 'System': System, 'SC': SC, 'screen': scr, 'scr': scr}
+            vlist = {'SC': SC,'FS': FS, 'CF': CF, 'FullInput': key, 'ChorusFruit': CF, 'FileSystem': FS, 'System': System, 'SC': SC, 'screen': scr, 'scr': scr, "__name__": '__MDOS__'}
+            DataOpen = ('\n' + open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read()).replace('\n@use IO::', '\n#').replace('\nFunc IO::', '\ndef ')
             if len(key.split('(')) == 1:
                 args = (key.split('('))
                 args = tuple(args)
                 vlist.update({'args': args})
-                exec(open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read(), vlist)
+                exec(DataOpen, vlist)
             elif len(key.split('(')) == 2:
                 args = []
                 for i in range(len(key.replace(', ', '(').split('('))):
@@ -67,7 +68,7 @@ def System(key):
                 args[len(args) - 1] = args[len(args) - 1][0:-1]
                 args = tuple(args)
                 vlist.update({'args': args})
-                exec(open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read(), vlist)
+                exec(DataOpen, vlist)
         else:
             print('M-DOS: App Not Found')
 OWORKING_DIR = FS.WORKING_DIR
