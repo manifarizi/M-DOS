@@ -20,7 +20,7 @@ def runApp(key:str, filetype:str) -> None:
         DataOpen = ('\n' + open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read())
     elif filetype == 'mexc':
         with open('ProgFiles\\' + key.split('(')[0] + '.mexc', 'rb') as file:
-            DataOpen = pickle.load(file)
+            DataOpen = ''.join(pickle.load(file))
     DataOpen = DataOpen.replace('\n@use IO::', '\nglobal ').replace('\nFunc IO::', '\ndef ').replace('\n@use PY::', '\nimport ')
     if len(key.split('(')) == 1:
         args = (key.split('('))
