@@ -3,15 +3,19 @@ import os
 import pickle
 os.chdir(os.path.dirname(__file__))
 dir_sys = {'#': ['home', {'File_Name': 'text.txt'}],
-'#/home': ['Dir1', 'Apps'],
-'#/home/Apps': ['nul'],
-'#/home/Dir2': ['nul']}
+    '#/home': ['Dir1', 'Apps'],
+    '#/home/Apps': ['nul'],
+    '#/home/Dir2': ['nul']}
 file_sys = {'#/text.txt': 'This is a text file'}
 DComands = ['cd', 'read', 'ls', 'mkdir', 'mkfile', 'loadFS', 'save', 'del', 'rmdir', 'cd..']
 DComandsl1 = ['cd', 'read', 'mkdir', 'mkfile', 'del', 'rmdir']
 Apps = []
+MEXEApps = []
 for i in os.listdir('ProgFiles'):
-    Apps.append(i[0:-3])
+    if i[-3:len(i)] == '.py':
+        Apps.append(i[0:-3])
+    elif i[-5:len(i)] == '.mexc':
+        MEXEApps.append(i[0:-5])
 WORKING_DIR = '#'
 def is_file(file_name: str) -> bool:
     """Return True if the input is a dict"""
@@ -102,7 +106,7 @@ def cdback() -> None:
     save()
 
 def mkfile(name: str, data: str='') -> None:
-    """makes a folder"""
+    """makes a file"""
     if not exist_dir(name):
         if not WORKING_DIR + '/' + name in [i for i in file_sys]:
             dir_sys[WORKING_DIR].append({'File_Name': name})

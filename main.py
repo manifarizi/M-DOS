@@ -3,6 +3,7 @@ import sys
 import os
 import time
 import threading
+import pickle
 import ChorusFruit as CF
 import mafs as FS
 import SysCalls as SC
@@ -13,7 +14,27 @@ with CF.Screen() as scr:
         for C in range(CF.COLS + 1):
             scr.write(C, L, ' ', '[back_blue]')
 
-
+def runApp(key:str, filetype:str) -> None:
+    vlist = {'SC': SC,'FS': FS, 'CF': CF, 'FullInput': key, 'ChorusFruit': CF, 'FileSystem': FS, 'System': System, 'SC': SC, 'screen': scr, 'scr': scr, "__name__": '__MDOS__'}
+    if filetype == 'py':
+        DataOpen = ('\n' + open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read())
+    elif filetype == 'mexc':
+        with open('ProgFiles\\' + key.split('(')[0] + '.mexc', 'rb') as file:
+            DataOpen = pickle.load(file)
+    DataOpen = DataOpen.replace('\n@use IO::', '\nglobal ').replace('\nFunc IO::', '\ndef ').replace('\n@use PY::', '\nimport ')
+    if len(key.split('(')) == 1:
+        args = (key.split('('))
+        args = tuple(args)
+        vlist.update({'args': args})
+        exec(DataOpen, vlist)
+    elif len(key.split('(')) == 2:
+        args = []
+        for i in range(len(key.replace(', ', '(').split('('))):
+            args.append(key.replace(', ', '(').split('(')[i])
+        args[len(args) - 1] = args[len(args) - 1][0:-1]
+        args = tuple(args)
+        vlist.update({'args': args})
+        exec(DataOpen, vlist)
 def titlebar(_):
     """Makes a bar on top of screen"""
     scr = CF.Screen()
@@ -53,24 +74,14 @@ def System(key):
                     FS.loadFS()
                 elif key.split('(')[0] == 'cd..':
                     FS.cdback()
+        elif key.split('(')[0] in FS.MEXEApps:
+            runApp(key, 'mexc')
+            
         elif key.split('(')[0] in FS.Apps:
-            vlist = {'SC': SC,'FS': FS, 'CF': CF, 'FullInput': key, 'ChorusFruit': CF, 'FileSystem': FS, 'System': System, 'SC': SC, 'screen': scr, 'scr': scr, "__name__": '__MDOS__'}
-            DataOpen = ('\n' + open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read()).replace('\n@use IO::', '\n#').replace('\nFunc IO::', '\ndef ')
-            if len(key.split('(')) == 1:
-                args = (key.split('('))
-                args = tuple(args)
-                vlist.update({'args': args})
-                exec(DataOpen, vlist)
-            elif len(key.split('(')) == 2:
-                args = []
-                for i in range(len(key.replace(', ', '(').split('('))):
-                    args.append(key.replace(', ', '(').split('(')[i])
-                args[len(args) - 1] = args[len(args) - 1][0:-1]
-                args = tuple(args)
-                vlist.update({'args': args})
-                exec(DataOpen, vlist)
+            runApp(key, 'py')
         else:
             print('M-DOS: App Not Found')
+
 OWORKING_DIR = FS.WORKING_DIR
 FS.WORKING_DIR = '#'
 System(FS.readReturn('startUP.boot').replace('[', '(').replace(']', ')'))
