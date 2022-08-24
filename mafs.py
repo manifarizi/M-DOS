@@ -1,13 +1,14 @@
 """Importing modules"""
 import os
 import pickle
+import SysCalls as SC
 os.chdir(os.path.dirname(__file__))
 dir_sys = {'#': ['home', {'File_Name': 'text.txt'}],
     '#/home': ['Dir1', 'Apps'],
     '#/home/Apps': ['nul'],
     '#/home/Dir2': ['nul']}
 file_sys = {'#/text.txt': 'This is a text file'}
-DComands = ['cd', 'read', 'ls', 'mkdir', 'mkfile', 'loadFS', 'save', 'del', 'rmdir', 'cd..']
+DComands = ['cd', 'read', 'ls', 'mkdir', 'mkfile', 'loadFS', 'save', 'del', 'rmdir', 'cd..', 'STB']
 DComandsl1 = ['cd', 'read', 'mkdir', 'mkfile', 'del', 'rmdir']
 Apps = []
 MEXEApps = []
@@ -70,7 +71,7 @@ def mkdir(name: str) -> None:
         dir_sys[WORKING_DIR].append(name)
 
     else:
-        print('mkdir: File Or Dir with Same name Exist')
+        SC.MSGBox().Error('mkdir: File Or Dir with Same name Exist')
         save()
 
 def read(name: str) -> None:
@@ -78,13 +79,13 @@ def read(name: str) -> None:
     try:
         print(file_sys[WORKING_DIR + '/' + name])
     except KeyError:
-        print('read: File Not Found!')
+        SC.MSGBox().Error('read: File Not Found!')
     save()
 def readReturn(name: str) -> str:
     try:
         return file_sys[WORKING_DIR + '/' + name]
     except KeyError:
-        print('read: File Not Found!')
+        SC.MSGBox().Error('read: File Not Found!')
 def cd(name: str) -> None:
     """change directory"""
     global WORKING_DIR
@@ -93,9 +94,9 @@ def cd(name: str) -> None:
             if exist_dir(i):
                 WORKING_DIR = WORKING_DIR + '/' + i
             else:
-                print("cd: Can't Find Dir With this name")
+                SC.MSGBox().Error("cd: Can't Find Dir With this name")
         else:
-            print("cd: Can't Find Dir With this name")
+            SC.MSGBox().Error("cd: Can't Find Dir With this name")
     save()
 
 def cdback() -> None:
@@ -112,7 +113,7 @@ def mkfile(name: str, data: str='') -> None:
             dir_sys[WORKING_DIR].append({'File_Name': name})
         file_sys.update({WORKING_DIR + '/' + name: data})
     else:
-        print('mkfile: File Or dir with Same name Exist')
+        SC.MSGBox().Error('mkfile: File Or dir with Same name Exist')
     save()
 
 def delete(name: str) -> None:
@@ -121,7 +122,7 @@ def delete(name: str) -> None:
         dir_sys[WORKING_DIR].remove({'File_Name': name})
         del file_sys[WORKING_DIR + '/' + name]
     except ValueError:
-        print('delete: File Not Found!')
+        SC.MSGBox().Error('delete: File Not Found!')
     save()
 
 def rmdir(name: str) -> None:
@@ -130,7 +131,7 @@ def rmdir(name: str) -> None:
         del dir_sys[WORKING_DIR + '/' + name]
         dir_sys[WORKING_DIR].remove(name)
     else:
-        print('rmdir: Dir Not Found!')
+        SC.MSGBox().Error('rmdir: Dir Not Found!')
     save()
 
 def save() -> None:

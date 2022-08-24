@@ -9,11 +9,11 @@ import mafs as FS
 import SysCalls as SC
 os.chdir(os.path.dirname(__file__))
 FS.loadFS()
-with CF.Screen() as scr:
+def color(scr):
     for L in range(CF.LINES + 1):
         for C in range(CF.COLS + 1):
             scr.write(C, L, ' ', '[back_blue]')
-
+color(CF.Screen())
 def runApp(key:str, filetype:str) -> None:
     vlist = {'SC': SC,'FS': FS, 'CF': CF, 'FullInput': key, 'ChorusFruit': CF, 'FileSystem': FS, 'System': System, 'SC': SC, 'screen': scr, 'scr': scr, "__name__": '__MDOS__'}
     if filetype == 'py':
@@ -40,10 +40,9 @@ def titlebar(_):
     scr = CF.Screen()
     while True:
         time.sleep(0.5)
-        scr.Header(Left='[' + SC.BAR_LEFT_TEXT, Right= time.strftime(r'%H:%M:%S') + ']')
+        scr.Header(Left=SC.var(SC.BAR_LEFT_TEXT), Center=SC.var(SC.BAR_CENTER_TEXT), Right=SC.var(SC.BAR_RIGHT_TEXT))
         sys.stdout.flush()
 title = threading.Thread(target=titlebar, args=(None,))
-title.start()
 def System(key):
     """Run a System Command"""
     if not key == '':
@@ -74,13 +73,15 @@ def System(key):
                     FS.loadFS()
                 elif key.split('(')[0] == 'cd..':
                     FS.cdback()
+                elif key.split('(')[0] == 'STB':
+                    title.start()
         elif key.split('(')[0] in FS.MEXEApps:
             runApp(key, 'mexc')
             
         elif key.split('(')[0] in FS.Apps:
             runApp(key, 'py')
         else:
-            print('M-DOS: App Not Found')
+            SC.MSGBox().Error('M-DOS: App Not Found')
 
 OWORKING_DIR = FS.WORKING_DIR
 FS.WORKING_DIR = '#'
