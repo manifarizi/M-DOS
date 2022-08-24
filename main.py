@@ -15,6 +15,7 @@ def color(scr):
             scr.write(C, L, ' ', '[back_blue]')
 color(CF.Screen())
 def runApp(key:str, filetype:str) -> None:
+    scr = CF.Screen()
     vlist = {'SC': SC,'FS': FS, 'CF': CF, 'FullInput': key, 'ChorusFruit': CF, 'FileSystem': FS, 'System': System, 'SC': SC, 'screen': scr, 'scr': scr, "__name__": '__MDOS__'}
     if filetype == 'py':
         DataOpen = ('\n' + open('ProgFiles\\' + key.split('(')[0] + '.py', 'r', encoding='utf-8').read())

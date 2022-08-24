@@ -40,6 +40,11 @@ you can use rmdir for deleting "dirs" like this:
 ```
 rmdir(dirName)
 ```
+### STB:
+you can use STB for Starting Top Bar:
+```
+STB
+```
 # Custom Apps
 Apps Are just Python Files You can Create a Python File And Run it
 but You can use Custom Modules like FileSystem
@@ -110,5 +115,5 @@ SC.MSGBox().Info("Info")
 
 For Changing Top Bar Text you can:
 ```python
-SC.Top_Bar().set('topBarText')
+SC.Top_Bar().set('topBarLeftText', 'topBarCenterText', 'topBarRightText')
 ```

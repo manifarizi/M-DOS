@@ -1,3 +1,1 @@
-SC.MSGBox().Warn("Warning")
-SC.MSGBox().Error("Error")
-SC.MSGBox().Info("Info")
+SC.Top_Bar().set('topBarLeftText', 'topBarCenterText', 'topBarRightText')
